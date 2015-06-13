@@ -49,7 +49,7 @@ Median total number of steps per day (NAs are ignored) is: 10765
 
 ## What is the average daily activity pattern?  
 <br>
-For the average daily activity pattern we nce morewe calculate an aggregation of average of steps, this time by each interval.
+For the average daily activity pattern we once more calculate an aggregation of average of steps, this time by each interval.
 
 ```{r}
 steps_mean <- aggregate(data$steps, by = list(interval = data$interval), FUN=mean, na.rm=TRUE)
@@ -57,7 +57,8 @@ colnames(steps_mean) <- c("interval", "mean")
 ```
 The plot is produced by the following code:
 ```{r}
-plot(steps_mean$interval, steps_mean$mean, type="n", main="Average daily activity pattern", ylab='Average of steps', xlab="5 minute intervals")
+plot(steps_mean$interval, steps_mean$mean, type="n", 
+     main="Average daily activity pattern", ylab='Average of steps', xlab="5 minute intervals")
 lines(steps_mean$interval, steps_mean$mean)
 ```
 <br>
@@ -142,4 +143,4 @@ xyplot(x ~ interval | midweekANDweekend,
 
 ```
 <p>
-From the plot we see that the average number of steps is more evenly spread across the intervals during weekend, as opposed to during midweek days. We could attribute this to the rather different schedules of most people (work/school in midweek and free days on weekend).
+From the plot we see that the average number of steps is more evenly spread across the intervals during weekend, as opposed to during midweek days. We could attribute this to the rather different schedules of most people in midweek comparing to weekends (work/school in midweek and free days on weekend).
