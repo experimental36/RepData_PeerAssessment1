@@ -1,4 +1,10 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: 'Reproducible Research: Peer Assessment 1'
+output:
+  pdf_document: default
+  html_document:
+    keep_md: yes
+---  
 
 
 
@@ -29,7 +35,7 @@ colnames(data2) <- (c("dates", "steps"))
 hist(data2$steps, col = "red", xlab = "Steps per day", main="Histogram of steps", breaks = 20) 
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
 
 Mean and median of steps per day are also computed. 
 
@@ -60,7 +66,7 @@ plot(steps_mean$interval, steps_mean$mean, type="n", main="Average daily activit
 lines(steps_mean$interval, steps_mean$mean)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
 <br>
 Let's find the interval, which contains the maximum number of steps on average:
 
@@ -111,7 +117,7 @@ colnames(data2) <- (c("dates", "steps"))
 hist(data2$steps, col = "blue", xlab = "Steps per day", main="Histogram of steps", breaks = 20) 
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
 Mean and median of steps per day, without NAs:
 
@@ -148,6 +154,6 @@ xyplot(x ~ interval | midweekANDweekend,
        data = AveragedSteps, layout = c(1,2), type='l', ylab="Average number of steps", xlab="Interval")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
 <p>
 From the plot we see that the average number of steps is more evenly spread across the intervals during weekend, as opposed to during midweek days. We could attribute this to the rather different schedules of most people (work/school in midweek and free days on weekend).
