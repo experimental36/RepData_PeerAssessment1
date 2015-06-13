@@ -1,10 +1,4 @@
----
-title: 'Reproducible Research: Peer Assessment 1'
-output:
-  pdf_document: default
-  html_document:
-    keep_md: yes
----  
+# Reproducible Research: Peer Assessment 1
 
 
 
@@ -16,7 +10,8 @@ output:
 <br>
 Here we load the "activity.csv" file into an object named "data" :
 <br>
-```{r,  options(echo = TRUE)}
+
+```r
 data <- read.csv("activity.csv")
 ```
 
@@ -27,19 +22,21 @@ For each unique date that appeares in our data we compute the total sum of steps
 We use this information to plot a histogram of steps taken per day.
   
 
-```{r}
+
+```r
 data2 <- aggregate(data$steps ~ data$date, FUN = sum, na.action = na.pass)
 colnames(data2) <- (c("dates", "steps"))
 hist(data2$steps, col = "red", xlab = "Steps per day", main="Histogram of steps", breaks = 20) 
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-1-1.png) 
 
 Mean and median of steps per day are also computed. 
 
-```{r}
+
+```r
 mean_na = round(mean(data2$steps, na.rm = TRUE), 2)
 median_na = median(data2$steps, na.rm = TRUE)
-
 ```
 
 
@@ -51,18 +48,23 @@ Median total number of steps per day (NAs are ignored) is: 10765
 <br>
 For the average daily activity pattern we nce morewe calculate an aggregation of average of steps, this time by each interval.
 
-```{r}
+
+```r
 steps_mean <- aggregate(data$steps, by = list(interval = data$interval), FUN=mean, na.rm=TRUE)
 colnames(steps_mean) <- c("interval", "mean")
 ```
 The plot is produced by the following code:
-```{r}
+
+```r
 plot(steps_mean$interval, steps_mean$mean, type="n", main="Average daily activity pattern", ylab='Average of steps', xlab="5 minute intervals")
 lines(steps_mean$interval, steps_mean$mean)
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 <br>
 Let's find the interval, which contains the maximum number of steps on average:
-```{r}
+
+```r
 max_interval <- steps_mean$interval[which.max(steps_mean$mean)]
 ```
 It is interval 835.
@@ -71,7 +73,8 @@ It is interval 835.
 <br>
 The total number of rows containing missing values (NAs) is computed by the following code:
 
-```{r}
+
+```r
 incompletes <- sum(is.na(data$steps))
 ```
 The total number of rows with missing values is 2304. 
@@ -82,7 +85,8 @@ To fill in for the missing values of number of steps, I would choose median of t
 <p>
 Let's now create another data frame (e.g. "data3") that will contain interval step averages instead of NAs:
 
-```{r}
+
+```r
 data3 <- data
 steps_median <- aggregate(data$steps, by = list(interval = data$interval), FUN=median, na.rm=TRUE)
 rep_median <- rep(steps_median$x, times=1, each = 61)
@@ -100,19 +104,21 @@ for(i in 1:nrow(data3)){
 
 Now let's repeat the computation of median, mean and plot a new histogram, like we have already done, only this time with the new data frame:
 
-```{r}
+
+```r
 data2 <- aggregate(data3$steps ~ data3$date, FUN = sum, na.action = na.pass)
 colnames(data2) <- (c("dates", "steps"))
 hist(data2$steps, col = "blue", xlab = "Steps per day", main="Histogram of steps", breaks = 20) 
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
 
 Mean and median of steps per day, without NAs:
 
-```{r}
+
+```r
 mean = round(mean(data2$steps, na.rm = TRUE), 2)
 median = median(data2$steps, na.rm = TRUE)
-
 ```
 
 Mean total number of steps per day is: 9402.84  
@@ -126,7 +132,8 @@ Values of computations, done with replaced NAs, do not differ drastically with t
 To answer this question, we must read the information on dates and find their asociated days of the week. After that we separate these days into 2 groups - those belonging to weekend(Saturday and Sunday) and those belonging to midweek (all others). <br>
 After that we proceed with computation of average number of steps, as we have done already before:
 
-```{r, results='hide'}
+
+```r
 Sys.setlocale("LC_ALL", "C")
 dates <- as.Date(data3$date)
 
@@ -139,7 +146,8 @@ AveragedSteps <- aggregate(data3$steps, by = data3[, c("interval", "midweekANDwe
 library(lattice)
 xyplot(x ~ interval | midweekANDweekend, 
        data = AveragedSteps, layout = c(1,2), type='l', ylab="Average number of steps", xlab="Interval")
-
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 <p>
 From the plot we see that the average number of steps is more evenly spread across the intervals during weekend, as opposed to during midweek days. We could attribute this to the rather different schedules of most people (work/school in midweek and free days on weekend).
